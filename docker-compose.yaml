@@ -1,4 +1,4 @@
-version: "3.3"
+version: '3.3'
 
 services:
   educai:
@@ -6,20 +6,27 @@ services:
     container_name: educai
     ports:
       - "27017:27017"
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: educaiAdmin 
+      MONGO_INITDB_ROOT_PASSWORD: i9lnkPC9U46sOg0
+  
   backend:
     image: openjdk:17
     container_name: backend
-    command: java -jar home/java-app
+    command: java -jar /home/java-app
     volumes:
       - ./java-app/target/educai-0.0.1-SNAPSHOT.jar:/home/java-app
     depends_on:
       - educai
     ports:
       - "8080:8080"
+
   frontend:
-    image: node:18-alpine
-    command: tail -f /dev/null
+    image: nginx:latest
     container_name: frontend
+    command: nginx -g 'daemon off;'
+    volumes:
+      - ./web-app/dist:/usr/share/nginx/html
     depends_on:
       - backend
     ports:
