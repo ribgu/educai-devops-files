@@ -29,5 +29,16 @@ services:
       - ./web-app/dist:/usr/share/nginx/html
     depends_on:
       - backend
+      - ia-api
     ports:
       - "80:80"
+  
+  ia-api:
+    image: node:18-alpine
+    container_name: ia-api
+    command: node /home/dist/app.js
+    working_dir: /home
+    volumes:
+      - ./ia-api:/home
+    ports:
+      - "3000:3000"
