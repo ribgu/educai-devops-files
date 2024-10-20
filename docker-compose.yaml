@@ -21,18 +21,6 @@ services:
     ports:
       - "8080:8080"
 
-  frontend:
-    image: nginx:latest
-    container_name: frontend
-    command: nginx -g 'daemon off;'
-    volumes:
-      - ./web-app/dist:/usr/share/nginx/html
-    depends_on:
-      - backend
-      - ia-api
-    ports:
-      - "80:80"
-  
   ia-api:
     image: node:18-alpine
     container_name: ia-api
